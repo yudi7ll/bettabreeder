@@ -1,0 +1,27 @@
+*{
+    font-family: $font-family-sans-serif;
+}
+
+.navbar-laravel {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.active{
+  border-bottom: 2px solid #333;
+}
+
+.thumb{
+  width: 180px;
+  height: 150px;
+  object-fit: cover;
+}
+.thumb-lg{
+  width: 400px;
+  height: 380px;
+  object-fit: cover;
+}
+.thumb-hover{
+  transition: .3s;
+  filter: brightness(.3);
+}
