@@ -33,6 +33,9 @@
                         <li class="nav-item {{ Route::currentRouteNamed('home') ? 'active' : '' }}">
                             <a href="{{ route('home') }}" class="nav-link">Home</a>
                         </li>
+                        <li class="nav-item {{ str_contains(Route::currentRouteName(), 'profile') ? 'active' : '' }}">
+                            <a href="{{ route('profile') }}" class="nav-link">Profile</a>
+                        </li>
                         <li class="nav-item {{ str_contains(Route::currentRouteName(), 'auction') ? 'active' : '' }}">
                             <a href="{{ route('auction.index') }}" class="nav-link">Auction</a>
                         </li>
@@ -87,5 +90,6 @@
             @yield('content')
         </main>
     </div>
+@include('sweet::alert')
 </body>
 </html>

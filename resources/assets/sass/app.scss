@@ -15,39 +15,5 @@
 @import 'template';
 
 // style
+@import 'home';
 @import 'profile';
-
-
-// home style
-.home{
-  // background-color: #f2f2f2;
-  .recent-articles{
-    h5 a{
-      color: #333;
-    }
-    .thumbnail{
-      @extend .thumb;
-      transition: .3s;
-    }
-    .thumbnail:hover{
-      @extend .thumb-hover;
-    }
-  }
-
-  .featured-auction{
-    @extend .recent-articles;
-  }
-
-  .auction-list{
-    @extend .recent-articles;
-  }
-
-  .auction-show{
-    .thumbnail{
-      @extend .thumb-lg;
-    }
-  }
-
-}
-
-

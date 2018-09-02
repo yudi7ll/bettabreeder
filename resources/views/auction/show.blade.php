@@ -177,11 +177,6 @@
                         <th>{{ $auction->seller()->userinfo()->telp }}</th>
                     </tr>
                     <tr>
-                        <td>Date of Birth</td>
-                        <th>:</th>
-                        <th>{{ $auction->seller()->userinfo()->birth->toFormattedDateString() }}</th>
-                    </tr>
-                    <tr>
                         <td>Registered At</td>
                         <th>:</th>
                         <th>{{ $auction->seller()->userinfo()->created_at->toFormattedDateString() }}</th>

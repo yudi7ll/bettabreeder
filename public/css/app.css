@@ -13568,20 +13568,6 @@ a.text-dark:focus {
           filter: brightness(0.3);
 }
 
-.cover img {
-  width: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
-}
-
-.nav * {
-  color: #333;
-}
-
-.active {
-  font-weight: bold;
-}
-
 .home .recent-articles h5 a,
 .home .featured-auction h5 a,
 .home .auction-list h5 a {
@@ -13593,5 +13579,13 @@ a.text-dark:focus {
 .home .auction-list .thumbnail {
   -webkit-transition: .3s;
   transition: .3s;
+}
+
+.nav * {
+  color: #333;
+}
+
+.active {
+  font-weight: bold;
 }
 

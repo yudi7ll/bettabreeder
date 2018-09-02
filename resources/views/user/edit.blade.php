@@ -1,21 +1,23 @@
 @extends('layouts.app')
-
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.2/croppie.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.2/croppie.min.js"></script>
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}" aria-label="{{ __('Register') }}">
+    <div class="container profile">
+        <div class="cover row">
+            <div class="col-lg-8 order-lg-1  order-3">
+                <h4 class="font-weight-bold">Public Profile</h4>
+                <hr>
+                <div class="container">
+                    <form method="POST" action="{{ route('profile.update') }}" aria-label="{{ __('Edit Profile') }}">
                         @csrf
+                        @method('PUT')
 
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" autofocus>
+                                <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ $user->name }}">
 
                                 @if ($errors->has('name'))
                                     <span class="invalid-feedback" role="alert">
@@ -26,28 +28,14 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}">
-
-                                @if ($errors->has('email'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
                             <label for="gender" class="col-md-4 col-form-label text-md-right">Gender</label>
                             <div class="col-md-6">
                                 <select class="custom-select" name="gender" id="gender">
                                     <option>Select Gender...</option>
-                                    <option {{ old('gender') == "Man" ? 'selected' : '' }}>Man</option>
-                                    <option {{ old('gender') == "Female" ? 'selected' : '' }}>Female</option>
-                                    <option {{ old('gender') == "Superman" ? 'selected' : '' }}>Superman</option>
-                                    <option {{ old('gender') == "Batman" ? 'selected' : '' }}>Batman</option>
+                                    <option {{ $user->userinfo()->gender == "Man" ? 'selected' : '' }}>Man</option>
+                                    <option {{ $user->userinfo()->gender == "Female" ? 'selected' : '' }}>Female</option>
+                                    <option {{ $user->userinfo()->gender == "Superman" ? 'selected' : '' }}>Superman</option>
+                                    <option {{ $user->userinfo()->gender == "Batman" ? 'selected' : '' }}>Batman</option>
                                 </select>
 
                                 @if ($errors->has('gender'))
@@ -61,7 +49,7 @@
                         <div class="form-group row">
                             <label for="address" class="col-md-4 col-form-label text-md-right">Address</label>
                             <div class="col-md-6">
-                                <input type="text" class="form-control {{ $errors->has('address') ? 'is-invalid' : '' }}" id="address" name="address" value="{{ old('address') }}">
+                                <input type="text" class="form-control {{ $errors->has('address') ? 'is-invalid' : '' }}" id="address" name="address" value="{{ $user->userinfo()->address }}">
 
                                 @if ($errors->has('address'))
                                     <span class="invalid-feedback" role="alert">
@@ -74,7 +62,7 @@
                         <div class="form-group row">
                             <label for="city" class="col-md-4 col-form-label text-md-right">City</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control {{ $errors->has('city') ? 'is-invalid' : '' }}" id="city" name="city" value="{{ old('city') }}">
+                                <input type="text" class="form-control {{ $errors->has('city') ? 'is-invalid' : '' }}" id="city" name="city" value="{{ $user->userinfo()->city }}">
 
                                 @if ($errors->has('city'))
                                     <span class="invalid-feedback" role="alert">
@@ -83,7 +71,7 @@
                                 @endif
                             </div>
                             <div class="col-md-2">
-                                <input type="text" class="form-control {{ $errors->has('zip') ? 'is-invalid' : '' }}" id="zip" name="zip" value="{{ old('zip') }}" placeholder="Zip">
+                                <input type="text" class="form-control {{ $errors->has('zip') ? 'is-invalid' : '' }}" id="zip" name="zip" value="{{ $user->userinfo()->zip }}" placeholder="Zip">
 
                                 @if ($errors->has('zip'))
                                     <span class="invalid-feedback" role="alert">
@@ -96,7 +84,7 @@
                         <div class="form-group row">
                             <label for="country" class="col-md-4 col-form-label text-md-right">Country</label>
                             <div class="col-md-6">
-                                <input type="text" class="form-control {{ $errors->has('country') ? 'is-invalid' : '' }}" id="country" name="country" value="{{ old('country') }}">
+                                <input type="text" class="form-control {{ $errors->has('country') ? 'is-invalid' : '' }}" id="country" name="country" value="{{ $user->userinfo()->country }}">
 
                                 @if ($errors->has('country'))
                                     <span class="invalid-feedback" role="alert">
@@ -109,7 +97,7 @@
                         <div class="form-group row">
                             <label for="telp" class="col-md-4 col-form-label text-md-right">Telp. Number</label>
                             <div class="col-md-6">
-                                <input type="text" class="form-control {{ $errors->has('telp') ? 'is-invalid' : '' }}" id="telp" name="telp" value="{{ old('telp') }}">
+                                <input type="text" class="form-control {{ $errors->has('telp') ? 'is-invalid' : '' }}" id="telp" name="telp" value="{{ $user->userinfo()->telp }}">
 
                                 @if ($errors->has('telp'))
                                     <span class="invalid-feedback" role="alert">
@@ -119,60 +107,94 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label for="birth" class="col-md-4 col-form-label text-md-right">Birth Date</label>
-                            <div class="col-md-6">
-                                <input type="date" class="form-control {{ $errors->has('birth') ? 'is-invalid' : '' }}" name="birth" value="{{ old('birth') }}" placeholder="mmddyyyy">
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password">
-
-                                @if ($errors->has('password'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation">
-                            </div>
-                        </div>
-
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
+                                <button type="submit" class="btn btn-dark font-weight-bold">
+                                    <i class="fa fa-save"></i>
+                                    {{ __(' Save') }}
                                 </button>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
+            <div class="col-lg-1 order-2"></div>
+            <div class="col-lg-3 order-1 col-md-6 col-sm-8">
+                <h4 class="py-1 font-weight-bold">Profile Picture</h4>
+                <div id="cropping">
+                    <img class="rounded img-fluid" src="{{ asset('images/1.jpg') }}" alt="">
+                </div>
+                <div class="profile-picture">
+                    <form action="{{ route('profile.cover') }}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <input type="file" name="cover" id="cover" class="d-none">
+                        <button type="button" id="upload-btn" onclick="document.getElementById('cover').click();" class="btn btn-dark font-weight-bold btn-sm py-2 mb-4 mt-1 col-12"><i class="fa fa-upload"></i> Upload New Photo</button>
+                        <button type="button" id="do-upload" class="d-none btn btn-dark font-weight-bold btn-sm py-2 mb-4 mt-1 col-12"><i class="fa fa-save"></i> Save</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-
 <script>
-var select = new Vue({
-    el: '#gender',
-    data:{
-        genders :[
-            {text: 'Select Gender...'},
-            {text: 'Man'},
-            {text: 'Female'},
-            {text: 'Other'}
-        ]
-    }
-})
+
+    $(window).ready(function(){
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        // change the button
+        $('#upload-btn').click(function(){
+            $('#do-upload').removeClass('d-none');
+            $(this).hide();
+        });
+
+        // cropping
+
+        $('#cover').on('change', function () { 
+            // reset the img src attr
+            $('#cropping img').removeAttr('src');
+            // cropping setup
+            $uploadCrop = $('#cropping img').croppie({
+                boundary:{
+                    height: 200
+                },
+                viewport: {
+                    width: 200,
+                    height: 200,
+                    type: 'square'
+                }
+            });
+
+            // render preview
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $uploadCrop.croppie('bind', {
+                    url: e.target.result
+                });
+            }
+            reader.readAsDataURL(this.files[0]);
+        });    
+        
+        // upload to database
+        $('#do-upload').on('click', function (ev) {
+            $uploadCrop.croppie('result', {
+                type: 'canvas',
+                size: 'viewport'
+            }).then(function (resp) {
+                $.ajax({
+                    url: $('form').attr('action'),
+                    type: "POST",
+                    data: {'cover':resp},
+                    success: function (data) {
+                        console.log('ok');
+                    },
+                    error: function(){
+                        console.log('Error');
+                    }
+                });
+            });
+        });
+    });
 </script>
 @endsection

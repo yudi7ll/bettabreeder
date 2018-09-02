@@ -24,7 +24,6 @@ class CreateUserinfosTable extends Migration
             $table->string('zip')->nullable();
             $table->string('country');
             $table->string('telp');
-            $table->date('birth');
             $table->timestamps();
         });
     }

@@ -21,7 +21,6 @@ class UserinfoSeeder extends Seeder
             'zip' => 80117,
             'country' => 'Indonesia',
             'telp' => 12468,
-            'birth' => Carbon\Carbon::now(),
             'created_at' => Carbon\Carbon::now(),
             'updated_at' => Carbon\Carbon::now()
         ]);

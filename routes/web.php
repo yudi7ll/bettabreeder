@@ -27,6 +27,9 @@ Route::get('/admin', 'AdminController@index')->name('admin');
 
 // profile
 Route::get('/profile', 'ProfileController@index')->name('profile');
+Route::get('/profile/edit', 'ProfileController@edit')->name('profile.edit');
+Route::put('/profile/update', 'ProfileController@update')->name('profile.update');
+Route::post('/profile/cover', 'ProfileController@cover')->name('profile.cover');
 
 // bid
 Route::put('/bid', 'BidController@store')->name('bid');

@@ -27,16 +27,25 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    // user is belongs to auctions
-    // @return Auctions
+    // User has many to Auctions
     public function auctions()
     {
         return $this->hasMany(Auctions::class);
     }
 
-    // user info 
+    // Userinfo relationship
     public function userinfo()
     {
+        // User has one relationship with Userinfo
         return $this->hasOne(Userinfo::class, 'users_id')->first();
+    }
+
+    // updating user name
+    public function scopeUpdateName($query)
+    {
+        request()->validate([
+            'name' => 'required|string|max:255'
+        ]);
+        return $this->update(request(['name']));
     }
 }

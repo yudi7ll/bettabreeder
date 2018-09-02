@@ -3,10 +3,10 @@
 @section('content')
     <div class="container profile">
         <div class="cover row">
-            <div class="col-lg-3">
-                <img class="rounded" src="{{ asset('images/1.jpg') }}" alt="">
+            <div class="col-lg-3 col-sm-6">
+                <img class="rounded img-fluid" src="{{ asset('images/1.jpg') }}" alt="">
                 <h4 class="py-1 text-secondary">{{ Auth::user()->name }}</h4>
-                <button class="btn btn-dark font-weight-bold btn-sm py-2 mb-4 mt-1 col-12"><i class="fa fa-cogs"></i> Edit Profile</button>
+                <a href="{{ route('profile.edit') }}" class="btn btn-dark font-weight-bold btn-sm py-2 mb-4 mt-1 col-12"><i class="fa fa-cogs"></i> Edit Profile</a>
             </div>
             <div class="col-lg-9">
                 <ul class="nav nav-tabs" id="profileTab" role="tablist">
@@ -24,7 +24,9 @@
                 <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
 
                 </div>
-                <div class="tab-pane fade" id="bidding" role="tabpanel" aria-labelledby="bidding-tab">...</div>
+                <div class="tab-pane fade" id="bidding" role="tabpanel" aria-labelledby="bidding-tab">
+                    {{ $bidding }}
+                </div>
                 <div class="tab-pane fade" id="auction" role="tabpanel" aria-labelledby="auction-tab">...</div>
                 </div>
             </div>

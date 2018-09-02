@@ -1,29 +1,29 @@
 .home{
 
     .recent-articles{
-      h5 a{
+        h5 a{
         color: #333;
-      }
-      .thumbnail{
+        }
+        .thumbnail{
         @extend .thumb;
         transition: .3s;
-      }
-      .thumbnail:hover{
+        }
+        .thumbnail:hover{
         @extend .thumb-hover;
-      }
+        }
     }
 
     .featured-auction{
-      @extend .recent-articles;
+        @extend .recent-articles;
     }
 
     .auction-list{
-      @extend .recent-articles;
+        @extend .recent-articles;
     }
 
     .auction-show{
-      .thumbnail{
+        .thumbnail{
         @extend .thumb-lg;
-      }
+        }
     }
 }
