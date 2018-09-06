@@ -4,10 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
-use App\Bid;
 use App\User;
 use App\Userinfo;
-use Storage;
 
 class ProfileController extends Controller
 {
@@ -21,40 +19,46 @@ class ProfileController extends Controller
     // Return Profile page
     public function index()
     {
-        $bidding = Bid::find(Auth::user()->id);
-        return view('user.profile', compact(['bidding']));
+        return view('user.profile');
     }
 
     // return profile.edit page
     public function edit()
     {
-        $user = \App\User::find(Auth::user()->id);
-        return view('user.edit', compact('user'));
+        return view('user.edit');
     }
 
     // update request handler
     public function update()
     {
-        // find user_id Userinfo
-        $userinfo = Userinfo::find(Auth::user()->id);
+        // find Userinfo
+        $userinfo = Auth::user()->userinfo;
         // validate request userinfo
         $userinfo->userinfoValidate();
         // update data database
         $userinfo->userinfoUpdate();
 
-        // find user id User for name
-        $user = User::find(Auth::user()->id);
+        // find User for name
+        $user = Auth::user();
         // updating name
         $user->updateName();
 
-        alert()->success('Done!', 'Your profile has been updated.');
+        alert()->success('Saved!', 'Your Profile Has Been Updated!')->autoclose(3500);
         return redirect()->route('profile');
     }
 
     // cover update handler
-    public function cover()
+    public function cover(Request $request)
+    {   
+        Userinfo::coverUpdate();
+        alert()->success('Saved!', 'New Profile Picture Saved!');
+        return response()->json(['status'=>true]);
+    }
+
+    // when cover upload return error
+    public function error()
     {
-        // return dd(request());
-        Storage::putFile('images', request()->file('cover'));
+        alert()->error('Something Went Wrong!', 'Couldn\'t Proccess Your Request')->autoclose(4000);
+        return redirect()->route('profile');
     }
 }

@@ -23,6 +23,13 @@
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Betta Breeder') }}
                 </a>
+                <div class="dropdown d-block d-md-none ml-auto" data-toggle="dropdown">
+                    <a href="#" class="nav-link d-block d-md-none text-secondary"><i class="fa fa-bell"></i></a>
+
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a href="#" class="dropdown-item">Notifications</a>
+                    </div>
+                </div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -55,8 +62,8 @@
                                 <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                             </li>
                         @else
-                            <li class="nav-item dropdown" data-toggle="dropdown">
-                                <a href="#" class="nav-link"><i class="fa fa-bell"></i></a>
+                            <li class="nav-item dropdown d-none d-md-block" data-toggle="dropdown">
+                                <a href="#" class="nav-link d-none d-md-block"><i class="fa fa-bell"></i></a>
 
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <a href="#" class="dropdown-item">Notifications</a>

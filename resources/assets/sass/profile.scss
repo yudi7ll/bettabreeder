@@ -1,13 +1,23 @@
+.img-fluid {
+    width: 100%;
+}
 
-
-
-// .cover img{
-//     width: 100%;
-//     object-fit: cover;
-// }
-.nav *{
+.nav * {
     color: #333;
 }
-.active{
+
+.active {
     font-weight: bold;
+}
+
+#overview{
+    #userinfo{
+        tr td{
+            vertical-align: middle;
+            &.header{
+                padding: 0 1rem;
+                white-space: nowrap;
+            }
+        }
+    }
 }

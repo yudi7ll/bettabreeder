@@ -14,10 +14,11 @@ class AuctionSeeder extends Seeder
         $faker = Faker\Factory::create();
         DB::table('auctions')->insert([
             [
+                'image' => '1.jpg',
                 'name' => $faker->name,
                 'type' => $faker->lastName,
                 'size' => $faker->randomDigit,
-                'users_id' => $faker->numberBetween($min=1, $max=10),
+                'users_id' => 1,
                 'age' => $faker->numberBetween($min=0, $max=40),
                 'opening_price' => $faker->numberBetween($min=10000, $max=300000),
                 'product_code' => 'BT1',
@@ -28,10 +29,11 @@ class AuctionSeeder extends Seeder
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at' => \Carbon\Carbon::now()
             ],[
+                'image' => '1.jpg',
                 'name' => $faker->name,
                 'type' => $faker->lastName,
                 'size' => $faker->randomDigit,
-                'users_id' => $faker->numberBetween($min=1, $max=10),
+                'users_id' => 1,
                 'age' => $faker->numberBetween($min=0, $max=40),
                 'opening_price' => $faker->numberBetween($min=10000, $max=300000),
                 'product_code' => 'BT1',

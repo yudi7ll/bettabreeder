@@ -13,7 +13,7 @@ class UserinfoSeeder extends Seeder
     {
         DB::table('userinfos')->insert([
             'users_id' => 1,
-            'cover' => 'no-image.jpg',
+            'cover' => 'no-image.png',
             'seller_code' => 'SL1',
             'gender' => 'Man',
             'address' => str_random(10),
@@ -21,6 +21,7 @@ class UserinfoSeeder extends Seeder
             'zip' => 80117,
             'country' => 'Indonesia',
             'telp' => 12468,
+            'lastActivity' => Carbon\Carbon::now(),
             'created_at' => Carbon\Carbon::now(),
             'updated_at' => Carbon\Carbon::now()
         ]);

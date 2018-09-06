@@ -13568,6 +13568,17 @@ a.text-dark:focus {
           filter: brightness(0.3);
 }
 
+.img-hover {
+  -webkit-transition: .2s;
+  transition: .2s;
+}
+
+.img-hover:hover {
+  cursor: pointer;
+  -webkit-filter: brightness(0.4);
+          filter: brightness(0.4);
+}
+
 .home .recent-articles h5 a,
 .home .featured-auction h5 a,
 .home .auction-list h5 a {
@@ -13581,11 +13592,24 @@ a.text-dark:focus {
   transition: .3s;
 }
 
+.img-fluid {
+  width: 100%;
+}
+
 .nav * {
   color: #333;
 }
 
 .active {
   font-weight: bold;
+}
+
+#overview #userinfo tr td {
+  vertical-align: middle;
+}
+
+#overview #userinfo tr td.header {
+  padding: 0 1rem;
+  white-space: nowrap;
 }
 

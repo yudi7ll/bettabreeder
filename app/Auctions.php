@@ -10,7 +10,7 @@ class Auctions extends Model
     protected $dates = ['deadline', 'start_date'];
 
     protected $fillable = [
-        'name', 'type', 'size', 'seller_id', 'age',
+        'image', 'name', 'type', 'size', 'seller_id', 'age',
         'opening_price', 'product_code', 'start_date', 'deadline', 'seen',
         'status'
     ];
@@ -19,7 +19,7 @@ class Auctions extends Model
     // Access user data that belongsTo Auction
     public function seller()
     {
-        return $this->belongsTo(User::class, 'users_id')->first();
+        return $this->belongsTo(User::class, 'users_id');
     }
 
     // Access bids data that belongsTo auction
@@ -31,7 +31,17 @@ class Auctions extends Model
     // return the latest/higher one bids
     public function higherBid()
     {
-        return $this->hasMany(Bid::class)->latest()->first();
+        if( $higherBid = $this->hasMany(Bid::class)->latest()->first() ){
+            return $higherBid->price;
+        }else{
+            return $this->opening_price;
+        }
     }
 
+    // Comment on this auction
+    public function comments()
+    {
+        return $this->hasMany(Comments::class, 'auctions_id')->latest();
+    }
+    
 }

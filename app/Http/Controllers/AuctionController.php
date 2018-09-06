@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Auctions;
+use Auth;
 
 class AuctionController extends Controller
 {
@@ -21,7 +22,9 @@ class AuctionController extends Controller
      */
     public function index()
     {
-        return view('auction.list', ['auctions' => Auctions::all()]);
+        $userOnline = $this->userOnline();
+        $auctions = Auctions::get();
+        return view('auction.list', compact(['userOnline', 'auctions']));
     }
 
     /**
@@ -54,7 +57,13 @@ class AuctionController extends Controller
     public function show($id)
     {
         $auction = Auctions::find($id);
-        return view('auction.show', compact('auction'));
+        $comments = $auction->comments()->get();
+
+        // Add Seen value +1
+        $auction->seen++;
+        $auction->save();
+
+        return view('auction.show', compact(['auction', 'comments']));
     }
 
     /**

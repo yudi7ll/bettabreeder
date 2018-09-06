@@ -9,5 +9,10 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class Controller extends BaseController
 {
+    // How Many User Online?
+    public function userOnline()
+    {
+        return count(\App\Userinfo::userStatus());
+    }
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 }

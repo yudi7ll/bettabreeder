@@ -14,13 +14,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             AuctionSeeder::class,
             BidSeeder::class,
-            UserinfoSeeder::class
+            UserinfoSeeder::class,
+            UserSeeder::class,
+            AuctionSeeder::class,
         ]);
-        for($i = 0; $i< 10; $i++){
-            $this->call([
-                AuctionSeeder::class,
-                UserSeeder::class,
-            ]);
-        }
     }
 }

@@ -16,6 +16,7 @@ class CreateAuctionsTable extends Migration
         Schema::create('auctions', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('users_id');
+            $table->string('image')->default('no-image.png');
             $table->string('name');
             $table->string('type');
             $table->string('size');

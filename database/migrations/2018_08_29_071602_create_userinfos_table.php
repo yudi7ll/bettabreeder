@@ -16,14 +16,15 @@ class CreateUserinfosTable extends Migration
         Schema::create('userinfos', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('users_id')->unique();
-            $table->string('cover');
+            $table->string('cover')->default('no-image.png');
             $table->string('seller_code')->unique();
-            $table->string('gender');
-            $table->string('address');
-            $table->string('city');
+            $table->string('gender')->default('');
+            $table->string('address')->default('');
+            $table->string('city')->default('');
             $table->string('zip')->nullable();
-            $table->string('country');
-            $table->string('telp');
+            $table->string('country')->default('');
+            $table->string('telp')->default('');
+            $table->dateTime('lastActivity')->default(\Carbon\Carbon::now());
             $table->timestamps();
         });
     }

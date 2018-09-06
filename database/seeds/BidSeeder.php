@@ -22,7 +22,7 @@ class BidSeeder extends Seeder
                 'users_id' => 2,
                 'auctions_id' => 1,
                 'price' => 565000,
-                'created_at' => Carbon\Carbon::now(),
+                'created_at' => Carbon\Carbon::now()->addMinutes(1),
                 'updated_at' => Carbon\Carbon::now()
             ]
         ]);

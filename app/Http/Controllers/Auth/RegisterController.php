@@ -52,15 +52,6 @@ class RegisterController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
-            // 'cover' => 'string|unique:users',
-            // 'seller_code' => 'required|string|unique:users',
-            // 'gender' => 'required|string|max:50',
-            // 'address' => 'required|string|max:255',
-            // 'city' => 'required|string|max:100',
-            // 'zip' => 'max:50',
-            // 'country' => 'required|string|max:100',
-            // 'telp' => 'required|string|max:100',
-            // 'birth' => 'required',
         ]);
     }
 
@@ -70,21 +61,20 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
+
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            // 'cover' => 'no-image.jpg',
-            // 'seller_code' => str_random(5),
-            // 'gender' => $data['gender'],
-            // 'address' => $data['address'],
-            // 'city' => $data['city'],
-            // 'zip' => $data['zip'],
-            // 'country' => $data['country'],
-            // 'telp' => $data['telp'],
-            // 'birth' => $data['birth'],
         ]);
+        
+        \App\Userinfo::create([
+            'users_id' => $user->id,
+            'seller_code' => 'SL'.$user->id.time(),
+        ]);
+
+        return $user;
     }
 }

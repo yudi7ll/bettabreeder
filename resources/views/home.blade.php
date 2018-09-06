@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-@include('side/right')
+@include('side.left')
 
 <div class="container home col-md-8">
     <div class="recent-articles">

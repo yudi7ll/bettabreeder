@@ -30,14 +30,26 @@ class User extends Authenticatable
     // User has many to Auctions
     public function auctions()
     {
-        return $this->hasMany(Auctions::class);
+        return $this->hasMany(Auctions::class, 'users_id');
     }
 
     // Userinfo relationship
     public function userinfo()
     {
         // User has one relationship with Userinfo
-        return $this->hasOne(Userinfo::class, 'users_id')->first();
+        return $this->hasOne(Userinfo::class, 'users_id');
+    }
+
+    // User bids relationship
+    public function userbids()
+    {
+        return $this->hasMany(Bid::class, 'users_id');
+    }
+
+    // User comment relationship
+    public function comments()
+    {
+        return $this->hasMany(Comments::class, 'users_id');
     }
 
     // updating user name
