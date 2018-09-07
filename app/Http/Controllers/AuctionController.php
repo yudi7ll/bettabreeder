@@ -10,9 +10,12 @@ class AuctionController extends Controller
 {
 
     
-    public function __construct()
+    protected $auctions;
+    
+    public function __construct(Auctions $auctions)
     {
         $this->middleware('auth')->except(['index', 'show']);
+        $this->auctions = $auctions;
     }
     
     /**
@@ -23,7 +26,7 @@ class AuctionController extends Controller
     public function index()
     {
         $userOnline = $this->userOnline();
-        $auctions = Auctions::get();
+        $auctions = $this->auctions->all();
         return view('auction.list', compact(['userOnline', 'auctions']));
     }
 
@@ -34,7 +37,7 @@ class AuctionController extends Controller
      */
     public function create()
     {
-        //
+        return view('auction.create');
     }
 
     /**
@@ -45,9 +48,39 @@ class AuctionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // validate Request
+        $this->auctions->validateAuctions();
+
+        // Store & Select the Auctions
+        $this->auctions->addAuctions($request);
+
+        return redirect()->route('auction.image');
     }
 
+    /**
+     * Show the form for Upload an Image
+     * route('auction.image');
+     * @return Response
+     */
+    public function imageUpload()
+    {
+        $auction = Auth::user()->auctions()->latest()->first();
+        return view('auction.imageUpload', compact('auction'));
+    }
+
+    /**
+     * Store Uploaded image
+     * @param Request&id
+     * @return Response
+     */
+    public function imageUploadStore(Request $request, $id)
+    {
+        $this->auctions->imageUpload($request, $id);
+
+        alert()->success('Updated!', 'The Picture has been Updated.');
+        return response()->json(['status'=>true]);
+    }
+     
     /**
      * Display the specified resource.
      *
@@ -56,8 +89,8 @@ class AuctionController extends Controller
      */
     public function show($id)
     {
-        $auction = Auctions::find($id);
-        $comments = $auction->comments()->get();
+        $auction = $this->auctions->find($id);
+        $comments = $auction->comments;
 
         // Add Seen value +1
         $auction->seen++;
@@ -74,7 +107,8 @@ class AuctionController extends Controller
      */
     public function edit($id)
     {
-        //
+        $auction = $this->auctions->find($id);
+        return view('auction.edit', compact('auction'));
     }
 
     /**
@@ -86,7 +120,19 @@ class AuctionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // Select the auction
+        $auction = $this->auctions->find($id);
+        // Validate the Auction
+        $auction->validateAuctions();
+        // Update Database
+        $auction->update(request([
+            'name', 'type', 'size', 'age', 
+            'opening_price','start_date', 'deadline'
+        ]));
+
+        alert()->success('Saved!', 'Auctions has been saved!');
+
+        return redirect()->route('auction.show', $id);
     }
 
     /**
@@ -97,6 +143,9 @@ class AuctionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->auctions->find($id)->delete();
+        
+        alert()->danger('Deleted!', 'The Auction has Been Deleted!');
+        return redirect('auction');
     }
 }

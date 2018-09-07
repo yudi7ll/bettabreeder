@@ -37,29 +37,22 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item {{ Route::currentRouteNamed('home') ? 'active' : '' }}">
-                            <a href="{{ route('home') }}" class="nav-link">Home</a>
+                        <li class="nav-item {{ str_contains(Route::currentRouteName(), 'auction') ? 'active' : '' }}">
+                            <a href="{{ route('auction.index') }}" class="nav-link">Auction</a>
                         </li>
                         <li class="nav-item {{ str_contains(Route::currentRouteName(), 'profile') ? 'active' : '' }}">
                             <a href="{{ route('profile') }}" class="nav-link">Profile</a>
                         </li>
-                        <li class="nav-item {{ str_contains(Route::currentRouteName(), 'auction') ? 'active' : '' }}">
-                            <a href="{{ route('auction.index') }}" class="nav-link">Auction</a>
-                        </li>
-                        <li class="nav-item {{ Route::currentRouteNamed('articles') ? 'active' : '' }}">
-                            <a href="{{ route('articles') }}" class="nav-link">Articles</a>
-                        </li>
                     </ul>
-
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}<i class="fa fa-sign-in fa-fw fa-lg"></i></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                <a class="nav-link font-weight-bold" href="{{ route('register') }}">{{ __('Join Now') }}</a>
                             </li>
                         @else
                             <li class="nav-item dropdown d-none d-md-block" data-toggle="dropdown">

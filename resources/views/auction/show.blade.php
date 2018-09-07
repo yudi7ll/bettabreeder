@@ -7,17 +7,15 @@
             <div class="row mb-4">
                     <div class="col-md-4 offset-md-1 col-lg-3 offset-lg-1 d-flex align-items-center">
                         <figure class="figure">
-                            <img src="{{ asset('images/1.jpg') }}" class="mr-3 figure-img img-fluid rounded" alt="{{ $auction->name }}">
+                            <img src="{{ asset('images/'.$auction->image) }}" class="mr-3 figure-img img-fluid rounded" alt="{{ $auction->name }}">
                             <figcaption class="figure-caption pull-right text-danger" id="countDownTime"></figcaption>
                         </figure>
                     </div>    
                     <div class="col-md-7 col-lg-7 mt-4">
-                        <a href="{{ route('auction.show', $auction) }}" class="text-dark">
-                            <h5 class="font-weight-bold">
-                                {{ $auction->name }} ( {{ $auction->size.'cm' }} ) 
-                                <small class="pull-right"><i class="fa fa-eye"></i> {{ $auction->seen }}</small>
-                            </h5>
-                        </a>
+                        <h5 class="font-weight-bold">
+                            {{ $auction->name }} ( {{ $auction->size.'cm' }} ) 
+                            <small class="pull-right"><i class="fa fa-eye"></i> {{ $auction->seen }}</small>
+                        </h5>
                         <table class="table">
                             <tr>
                                 <td>Owner</td>
@@ -89,37 +87,41 @@
                                 </th>
                             </tr>
                         </table>
-                        <button type="button" data-toggle="modal" data-target="#exampleModal" data-whatever="" class="btn btn-success font-weight-bold col-12"><i class="fa fa-exclamation-circle fa-fw"></i>Bid Now</button>
+                        @if (Auth::user()->id == $auction->users_id)
+                            <a href="{{ route('auction.edit', $auction) }}" class="btn btn-info font-weight-bold col text-light"><i class="fa fa-edit"></i> Edit</a>
+                        @else
+                            <button type="button" data-toggle="modal" data-target="#exampleModal" data-whatever="" class="btn btn-success font-weight-bold col-12"><i class="fa fa-exclamation-circle fa-fw"></i>Bid Now</button>
 
-                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Bid</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <form action="{{ route('bid', $auction) }}" method="post" id="bid">
-                                        @csrf
-                                        <div class="form-group">
-                                            <label for="higherBid" class="col-form-label">Penawaran Harus Diatas:</label>
-                                            <input type="text" class="form-control" disabled id="higherBid" value="Rp. {{ number_format($auction->higherBid(), 0, '.', '.')}}">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="message-text" class="col-form-label">Penawaran Anda (Rp.):</label>
-                                            <input type="number" name="price" class="form-control" id="message-text" placeholder="Ex: {{ $auction->higherBid() }}">
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                    <button type="button" onclick="document.getElementById('bid').submit()" class="btn btn-primary"><i class="fa fa-exclamation-circle fa-fw"></i>Bid Now</button>
-                                </div>
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Bid</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="{{ route('bid', $auction) }}" method="post" id="bid">
+                                            @csrf
+                                            <div class="form-group">
+                                                <label for="higherBid" class="col-form-label">Penawaran Harus Diatas:</label>
+                                                <input type="text" class="form-control" disabled id="higherBid" value="Rp. {{ number_format($auction->higherBid(), 0, '.', '.')}}">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="message-text" class="col-form-label">Penawaran Anda (Rp.):</label>
+                                                <input type="number" name="price" class="form-control" id="message-text" placeholder="Ex: {{ $auction->higherBid() }}">
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                        <button type="button" onclick="document.getElementById('bid').submit()" class="btn btn-primary"><i class="fa fa-exclamation-circle fa-fw"></i>Bid Now</button>
+                                    </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
                         <hr>
                     </div>
                 </div>

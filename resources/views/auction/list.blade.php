@@ -4,7 +4,10 @@
 
 <div class="container home col-md-8 bg-white">
     <div class="auction-list">
-        <h5 class="pt-4"><i class="fa fa-gavel"></i> Newest Auctions</h5>
+        <h5 class="pt-4">
+            <i class="fa fa-gavel"></i> Newest Auctions
+            <a href="{{ route('auction.create') }}" class="btn btn-dark font-weight-bold pull-right btn-sm px-3 text-light"><i class="fa fa-plus"></i> Create</a>
+        </h5>
         @foreach ($auctions as $auction)
             <div class="row mb-4">
                 <div class="col-sm-4 d-flex align-items-center">

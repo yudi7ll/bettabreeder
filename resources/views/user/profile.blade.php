@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <?php $no=1; ?>
+<?php $no=1; ?>
     <div class="container profile">
         <div class="cover row">
             <div class="col-lg-3 col-sm-6 mb-4">
@@ -124,66 +124,68 @@
                             <h5 class="pt-4 text-center text-danger">There's no Bids found!.</h5>
                         @else
                             <h5 class="pt-4 font-weight-bold">Bid History<i class="fa fa-feed fa-fw"></i></h5>
-                        @endif
-                        @foreach (Auth::user()->userbids()->latest()->get() as $bid)
-                            <li class="list-group-item">
-                                <div class="row">
-                                    <div class="col-1">
-                                        <a href="{{ route('auction.show', $bid->auction) }}" class="text-dark">
-                                            <img class="rounded img-fluid img-hover" src="{{ asset('images/'.$bid->auction->image) }}" alt="{{ $bid->auction->image }}">
-                                        </a>
-                                    </div>
-                                    <div class="col-11">
-                                        <p>
-                                            {{ 'Rp. '.number_format($bid->price, 0, '.', '.') }} 
-                                            <span class="font-weight-normal">On :</span> 
-                                            <a class="text-dark" href="{{ route('auction.show', $bid->auction) }}">
-                                                {{ $bid->auction->name }}
+                            @foreach (Auth::user()->userbids()->latest()->get() as $bid)
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-1">
+                                            <a href="{{ route('auction.show', $bid->auction) }}" class="text-dark">
+                                                <img class="rounded img-fluid img-hover" src="{{ asset('images/'.$bid->auction->image) }}" alt="{{ $bid->auction->image }}">
                                             </a>
-                                        </p>
+                                        </div>
+                                        <div class="col-11">
+                                            <p>
+                                                {{ 'Rp. '.number_format($bid->price, 0, '.', '.') }} 
+                                                <span class="font-weight-normal">On :</span> 
+                                                <a class="text-dark" href="{{ route('auction.show', $bid->auction) }}">
+                                                    {{ $bid->auction->name }}
+                                                </a>
+                                                <span class="pull-right"><small>{{ $bid->created_at->diffForHumans() }}</small></span>
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
-                            </li>
-                        @endforeach
+                                </li>
+                            @endforeach
+                        @endif
                     </ul>
                 </div>
 
                 {{-- Auction Tab --}}
                 <div class="tab-pane fade" id="auction" role="tabpanel" aria-labelledby="auction-tab">
-                    @if (count(Auth::user()->auctions) == 0)
-                        <h5 class="pt-4 text-center text-danger">There's no auction found!.</h5>
+                    @if (count(Auth::user()->auctions) <= 0)
+                        <h5 class="pt-4 text-center text-danger">There's no Auction found!.</h5>
                     @else
                         <h5 class="pt-4 font-weight-bold">Auction History<i class="fa fa-feed fa-fw"></i></h5>
+                        <div class="row">
+                            @foreach (Auth::user()->auctions as $auction)
+                                <div class="row col-12 mb-2">
+                                    <div class="col-3 col-sm-2 d-sm-block d-none">
+                                        <a href="{{ route('auction.show', $auction) }}" class="text-dark">
+                                            <img class="img-fluid rounded img-hover" src="{{ asset('images/'.$auction->image) }}" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="col-9 col-sm-10 col-12">
+                                        <a href="{{ route('auction.show', $auction) }}" class="text-dark">
+                                            <h5 class="font-weight-bold">{{ $auction->name }} ( {{ $auction->size.'cm' }} )</h5>
+                                        </a>
+                                        <table class="table table-sm table-responsive table-striped">
+                                            <tr>
+                                                <td>Penawaran Tertinggi</td>
+                                                <td>:</td>
+                                                <th>{{ 'Rp. '.number_format($auction->higherBid(), 0, '.', '.') }}</th>
+                                            </tr>
+                                            <tr>
+                                                <td>Deadline</td>
+                                                <td>:</td>
+                                                <th class="font-weight-bold">{{ $auction->deadline->toFormattedDateString() }}</th>
+                                            </tr>
+                                        </table>
+                                    <span class="pull-right"><small>Published: {{ $auction->created_at->diffForHumans() }}</small></span>
+                                    </div>
+                                    <hr class="col-12">
+                                </div>
+                            @endforeach
+                        </div>
                     @endif
-                    <div class="row">
-                        @foreach (Auth::user()->auctions as $auction)
-                            <div class="row col-12 mb-2">
-                                <div class="col-3 col-sm-2 d-sm-block d-none">
-                                    <a href="{{ route('auction.show', $auction) }}" class="text-dark">
-                                        <img class="img-fluid rounded img-hover" src="{{ asset('images/'.$auction->image) }}" alt="">
-                                    </a>
-                                </div>
-                                <div class="col-9 col-sm-10 col-12">
-                                    <a href="{{ route('auction.show', $auction) }}" class="text-dark">
-                                        <h5 class="font-weight-bold">{{ $auction->name }} ( {{ $auction->size.'cm' }} )</h5>
-                                    </a>
-                                    <table class="table table-sm table-responsive table-striped">
-                                        <tr>
-                                            <td>Penawaran Tertinggi</td>
-                                            <td>:</td>
-                                            <th>{{ 'Rp. '.number_format($auction->higherBid(), 0, '.', '.') }}</th>
-                                        </tr>
-                                        <tr>
-                                            <td>Deadline</td>
-                                            <td>:</td>
-                                            <th class="font-weight-bold">{{ $auction->deadline->toFormattedDateString() }}</th>
-                                        </tr>
-                                    </table>
-                                </div>
-                                <hr class="col-12">
-                            </div>
-                        @endforeach
-                    </div>
                 </div>
             </div>
         </div>

@@ -26,7 +26,6 @@ class CreateAuctionsTable extends Migration
             $table->dateTime('start_date');
             $table->dateTime('deadline');
             $table->integer('seen');
-            $table->string('status');
             $table->timestamps();
         });
     }
